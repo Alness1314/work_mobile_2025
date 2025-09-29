@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    tools:context=".ui.settings.SettingsFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_facility"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                style="@style/Widget.Material3.CardView.Filled"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainerHighest"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_header_card_facility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_screen_card_title_facility"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        android:paddingBottom="@dimen/_8dp"
+                        android:paddingEnd="@dimen/_8dp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_layout_facility"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingEnd="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        app:helperText="@string/settings_screen_helper"
+                        android:hint="@string/settings_screen_hint_facility"
+                        app:startIconDrawable="@drawable/factory_settings_24dp"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/auto_complete_facility"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_select_facility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_screen_button_save"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/_16dp"
+                        android:layout_marginBottom="@dimen/_16dp"
+                        />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_tank"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_16dp"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainerHighest"
+                style="@style/Widget.Material3.CardView.Filled"
+                app:layout_constraintTop_toBottomOf="@id/card_facility"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/text_header_tanks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_screen_card_title_tank"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        android:paddingBottom="@dimen/_8dp"
+                        android:paddingEnd="@dimen/_8dp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_layout_tanks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:helperText="@string/settings_screen_helper"
+                        android:hint="@string/settings_screen_hint_tank"
+                        android:enabled="false"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingEnd="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        app:startIconDrawable="@drawable/truck_settings_24dp"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/auto_complete_tanks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_layout_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/settings_screen_hint_product"
+                        app:helperText="@string/settings_screen_helper_product"
+                        app:endIconMode="none"
+                        android:enabled="false"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingEnd="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        app:counterMaxLength="128"
+                        app:counterEnabled="false"
+                        app:startIconDrawable="@drawable/oildrop_settings_24dp"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="128"
+                            android:focusable="false"
+                            android:clickable="false"
+                            android:inputType="text"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_layout_unit_measurement"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/settings_screen_hint_unit_measurement"
+                        android:enabled="false"
+                        app:helperText="@string/settings_screen_helper_product"
+                        app:endIconMode="none"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingEnd="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        app:startIconDrawable="@drawable/unit_measurement_settings_24dp"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_unit_measurement"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:clickable="false"
+                            android:maxLength="128"
+                            android:inputType="text"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_select_tank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="@string/settings_screen_button_save"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/_16dp"
+                        android:layout_marginBottom="@dimen/_16dp"
+                        />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_info_data_save"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_16dp"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainerHighest"
+                style="@style/Widget.Material3.CardView.Filled"
+                app:layout_constraintTop_toBottomOf="@+id/card_tank">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_screen_card_title_save_values"
+                        android:paddingBottom="@dimen/_8dp"
+                        style="@style/TextAppearance.Material3.TitleMedium"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:layout_marginBottom="@dimen/_16dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/settings_screen_hint_facility"
+                            android:textStyle="bold"
+                            style="@style/TextAppearance.Material3.BodyMedium" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/text_facility_set"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            tools:text="ALM-0001"
+                            android:textStyle="normal"
+                            style="@style/TextAppearance.Material3.BodyMedium" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/_16dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/settings_screen_hint_tank"
+                            android:textStyle="bold"
+                            style="@style/TextAppearance.Material3.BodyMedium" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/text_tank_set"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            tools:text="TX-ALM-0001"
+                            android:textStyle="normal"
+                            style="@style/TextAppearance.Material3.BodyMedium" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/_16dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/settings_screen_hint_product"
+                            android:textStyle="bold"
+                            style="@style/TextAppearance.Material3.BodyMedium" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/text_product_set"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            tools:text="Gasolina regular"
+                            android:textStyle="normal"
+                            style="@style/TextAppearance.Material3.BodyMedium" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/_16dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/settings_screen_hint_unit_measurement"
+                            android:textStyle="bold"
+                            style="@style/TextAppearance.Material3.BodyMedium" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/text_unit_measurement_set"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            tools:text="Litros"
+                            android:textStyle="normal"
+                            style="@style/TextAppearance.Material3.BodyMedium" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    tools:context=".ui.about.AboutFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:contentDescription="@string/login_screen_image_description"
+                android:src="@drawable/cv360_about_ic"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.TitleMedium.Emphasized"
+                android:layout_marginTop="60dp"
+                android:text= "@string/about_screen_label_application"
+                />
+            <TextView
+                android:id="@+id/text_application"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:alpha="0.7"
+                tools:text="Control Volumetrico"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/TextAppearance.Material3.TitleMedium.Emphasized"
+                android:text= "@string/about_screen_label_name"
+                />
+            <TextView
+                android:id="@+id/text_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:alpha="0.7"
+                tools:text="CV360"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/TextAppearance.Material3.TitleMedium.Emphasized"
+                android:text= "@string/about_screen_label_version"
+                />
+            <TextView
+                android:id="@+id/text_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:alpha="0.7"
+                tools:text="1.0"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/TextAppearance.Material3.TitleMedium.Emphasized"
+                android:text= "@string/about_screen_label_rights"
+                />
+            <TextView
+                android:id="@+id/text_derechos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:alpha="0.7"
+                tools:text="2022 Grupo Susess Todos los derechos Reservados."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/TextAppearance.Material3.TitleMedium.Emphasized"
+                android:text= "@string/about_screen_label_serial_number"
+                />
+            <TextView
+                android:id="@+id/text_numero_serie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:alpha="0.7"
+                tools:text="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/TextAppearance.Material3.TitleMedium.Emphasized"
+                android:text= "@string/about_screen_label_supplier"
+                />
+            <TextView
+                android:id="@+id/text_proveedor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:alpha="0.7"
+                tools:text="GSU090415DU5"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/TextAppearance.Material3.TitleMedium.Emphasized"
+                android:text= "@string/about_screen_label_licensed_product"
+                />
+            <TextView
+                android:id="@+id/text_licencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:alpha="0.7"
+                tools:text="Emerging America Inmobiliaria, S.A. de C.V."/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

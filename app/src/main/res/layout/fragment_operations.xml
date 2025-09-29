@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.operations.OperationsFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_16dp">
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainerHighest"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        android:paddingEnd="@dimen/_8dp"
+                        android:text="@string/ops_screen_card_title_opetation" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilOperacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingEnd="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        android:paddingBottom="@dimen/_16dp"
+                        app:helperText="@string/ops_screen_helper_operation"
+                        android:hint="@string/ops_screen_hint_select_ops"
+                        app:startIconDrawable="@drawable/outline_description_24"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/auto_complete_operations"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainerHighest">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        android:paddingEnd="@dimen/_8dp"
+                        android:paddingBottom="@dimen/_8dp"
+                        android:text="@string/ops_screen_card_title_volume" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilVolumenEntregado"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ops_screen_hint_volumen_ops"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingTop="@dimen/_8dp"
+                        android:paddingEnd="@dimen/_16dp"
+                        android:paddingBottom="@dimen/_16dp"
+                        app:counterEnabled="false"
+                        app:counterMaxLength="128"
+                        app:endIconMode="clear_text"
+                        app:helperText="@string/ops_screen_helper_volumen_operation"
+                        app:startIconDrawable="@drawable/ic_gas_station_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etVolumenEntregado"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal"
+                            android:maxLength="128" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16dp"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainerHighest">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textDivider3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_16dp"
+                        android:paddingTop="@dimen/_16dp"
+                        android:paddingEnd="@dimen/_8dp"
+                        android:paddingBottom="@dimen/_8dp"
+                        android:text="@string/ops_screen_card_title_datetime" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilFechaIni"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/ops_screen_hint_start_end_date"
+                            android:paddingStart="@dimen/_16dp"
+                            android:paddingEnd="4dp"
+                            app:endIconMode="clear_text"
+                            app:helperText="@string/ops_screen_helper_start_datetime"
+                            app:layout_constraintEnd_toStartOf="@+id/tilHoraIni"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/baseline_calendar_month_24">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etFechaInicio"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:focusable="false" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilHoraIni"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/ops_screen_hint_start_end_time"
+                            android:paddingStart="4dp"
+                            android:paddingEnd="@dimen/_16dp"
+                            app:endIconMode="clear_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/tilFechaIni"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/baseline_access_time_filled_24">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etHoraInicio"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:focusable="false" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/_16dp"
+                        >
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilFechaFin"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/ops_screen_hint_start_end_date"
+                            android:paddingStart="@dimen/_16dp"
+                            android:paddingEnd="4dp"
+                            app:endIconMode="clear_text"
+                            app:helperText="@string/ops_screen_helper_end_datetime"
+                            app:layout_constraintEnd_toStartOf="@+id/tilHoraFin"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/baseline_calendar_month_24">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etFechaFin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:focusable="false" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilHoraFin"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/ops_screen_hint_start_end_time"
+                            android:paddingStart="4dp"
+                            android:paddingEnd="@dimen/_16dp"
+                            android:paddingBottom="@dimen/_16dp"
+                            app:endIconMode="none"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/tilFechaFin"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/baseline_access_time_filled_24">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etHoraFin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:focusable="false" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/md_theme_surfaceContainerHighest"
+                android:layout_marginTop="@dimen/_16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_16dp"
+                    android:paddingEnd="@dimen/_16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textDivider4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/_16dp"
+                        android:paddingBottom="@dimen/_8dp"
+                        android:text="@string/screen_card_evidence" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilUploadFile"
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/input_file"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="8dp"
+                            app:endIconMode="clear_text"
+                            app:helperText="@string/help_input_file"
+                            app:layout_constraintEnd_toStartOf="@+id/btnUploadFile"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/baseline_attach_file_24">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etUploadFile"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:focusable="false" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnUploadFile"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="0dp"
+                            android:text="@string/button_select_file"
+                            app:icon="@drawable/baseline_file_upload_24"
+                            app:layout_constraintBaseline_toBaselineOf="@id/tilUploadFile"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSendDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="@string/button_save_operation" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
