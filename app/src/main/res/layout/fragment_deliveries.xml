@@ -57,13 +57,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_search"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8dp"
-            android:drawableEnd="@drawable/ic_search_24"
             android:text="@string/delivery_screen_label_search"
+            android:drawableEnd="@drawable/ic_search_24"
             app:layout_constraintBaseline_toBaselineOf="@+id/input_layout_end_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/input_layout_end_date" />

@@ -44,7 +44,7 @@ class DashboardFragment : Fragment() {
                 "receptionsFragment" -> findNavController().navigate(R.id.navigation_reception)
                 "deliveriesFragment"   -> findNavController().navigate(R.id.navigation_delivery)
                 "eventFragment"  -> findNavController().navigate(R.id.navigation_events)
-                //"opsVolumetricFragment"    -> findNavController().navigate(R.id.opsVolumetricFragment)
+                "opsVolumetricFragment"    -> findNavController().navigate(R.id.navigation_operations)
                 else -> Snackbar.make(binding.root, "Ruta no configurada: ${module.route}", Snackbar.LENGTH_SHORT).show()
             }
         }

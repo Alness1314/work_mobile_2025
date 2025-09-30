@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_navigation_dashboard_to_navigation_events"
             app:destination="@id/navigation_events" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_navigation_operations"
+            app:destination="@id/navigation_operations" />
     </fragment>
 
     <fragment
@@ -60,6 +63,16 @@
         tools:layout="@layout/fragment_events" >
         <action
             android:id="@+id/action_navigation_events_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_operations"
+        android:name="com.susess.cv360.ui.operations.OperationsFragment"
+        android:label="@string/ops_screen_title"
+        tools:layout="@layout/fragment_operations" >
+        <action
+            android:id="@+id/action_navigation_operations_to_navigation_dashboard"
             app:destination="@id/navigation_dashboard" />
     </fragment>
 </navigation>

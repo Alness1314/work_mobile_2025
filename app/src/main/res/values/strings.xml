@@ -69,7 +69,7 @@
 
 
     <!--Common delivery and reception -->
-    <string name="ops_screen_card_title">Operaciones Volumetricas</string>
+    <string name="ops_screen_title">Transacciones</string>
     <string name="ops_screen_card_title_opetation">Transacción</string>
     <string name="ops_screen_helper_operation">Transaccion que se llevara a cabo</string>
     <string name="ops_screen_hint_select_ops">Seleccionar</string>
@@ -79,17 +79,11 @@
     <string name="ops_screen_card_title_datetime">Fecha &amp; Hora</string>
     <string name="ops_screen_hint_start_end_date">Fecha</string>
     <string name="ops_screen_hint_start_end_time">Hora</string>
-    <string name="ops_screen_helper_start_datetime">Inicio de la operación.</string>
-    <string name="ops_screen_helper_end_datetime">Fin de la operación.</string>
-
-
-
-
-
-
-    <string name="screen_card_evidence">Evidencia</string>
-    <string name="input_file">Archivo</string>
-    <string name="help_input_file">Ruta del archivo de evidencia.</string>
+    <string name="ops_screen_helper_start_datetime">Inicio de la transaccion.</string>
+    <string name="ops_screen_helper_end_datetime">Fin de la transaccion.</string>
+    <string name="ops_screen_card_title_evidence">Evidencia</string>
+    <string name="ops_screen_hint_file">Archivo</string>
+    <string name="ops_screen_helper_file">Ruta del archivo de evidencia.</string>
     <string name="button_select_file">Seleccionar</string>
     <string name="button_save_operation">Guardar</string>
 </resources>

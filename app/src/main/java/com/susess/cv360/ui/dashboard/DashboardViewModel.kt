@@ -29,7 +29,7 @@ class DashboardViewModel @Inject constructor(
                 //val list = repo.getList("/v1/api/modules", queries = mapOf("level" to "home"), clazz = ModuleResponse::class.java)
                 _modules.postValue(mutableListOf<ModuleResponse>(ModuleResponse(1,"Recepciones", "receptionsFragment", "ic_reception"),
                     ModuleResponse(2,"Entregas", "deliveriesFragment", "ic_delivery"),
-                    ModuleResponse(3,"Operaciones Volumetricas", "", "ic_ops_vol"),
+                    ModuleResponse(3,"Transacciones", "opsVolumetricFragment", "ic_ops_vol"),
                     ModuleResponse(4,"Alarmas y Eventos", "eventFragment", "ic_events")))
                 _uiState.postValue(UiState.Success)
 

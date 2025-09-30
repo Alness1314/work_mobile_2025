@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/md_theme_surfaceContainerHighest"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="@dimen/_16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                         android:text="@string/ops_screen_card_title_opetation" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilOperacion"
+                        android:id="@+id/input_layout_transaction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/_16dp"
@@ -88,7 +88,7 @@
                         android:text="@string/ops_screen_card_title_volume" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilVolumenEntregado"
+                        android:id="@+id/input_layout_volume"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
                         app:startIconDrawable="@drawable/ic_gas_station_24">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etVolumenEntregado"
+                            android:id="@+id/input_volume"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal"
@@ -129,7 +129,7 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/textDivider3"
+                        android:id="@+id/text_title_datetime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/_16dp"
@@ -143,22 +143,22 @@
                         android:layout_height="wrap_content">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilFechaIni"
+                            android:id="@+id/input_layout_start_date"
                             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:hint="@string/ops_screen_hint_start_end_date"
                             android:paddingStart="@dimen/_16dp"
-                            android:paddingEnd="4dp"
+                            android:paddingEnd="@dimen/_4dp"
                             app:endIconMode="clear_text"
                             app:helperText="@string/ops_screen_helper_start_datetime"
-                            app:layout_constraintEnd_toStartOf="@+id/tilHoraIni"
+                            app:layout_constraintEnd_toStartOf="@+id/input_layout_start_time"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etFechaInicio"
+                                android:id="@+id/input_start_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
@@ -167,21 +167,21 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilHoraIni"
+                            android:id="@+id/input_layout_start_time"
                             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:hint="@string/ops_screen_hint_start_end_time"
-                            android:paddingStart="4dp"
+                            android:paddingStart="@dimen/_4dp"
                             android:paddingEnd="@dimen/_16dp"
                             app:endIconMode="clear_text"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/tilFechaIni"
+                            app:layout_constraintStart_toEndOf="@+id/input_layout_start_date"
                             app:layout_constraintTop_toTopOf="parent"
                             app:startIconDrawable="@drawable/baseline_access_time_filled_24">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etHoraInicio"
+                                android:id="@+id/input_start_time"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
@@ -198,22 +198,22 @@
                         >
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilFechaFin"
+                            android:id="@+id/input_layout_end_date"
                             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:hint="@string/ops_screen_hint_start_end_date"
                             android:paddingStart="@dimen/_16dp"
-                            android:paddingEnd="4dp"
+                            android:paddingEnd="@dimen/_4dp"
                             app:endIconMode="clear_text"
                             app:helperText="@string/ops_screen_helper_end_datetime"
-                            app:layout_constraintEnd_toStartOf="@+id/tilHoraFin"
+                            app:layout_constraintEnd_toStartOf="@+id/input_layout_end_time"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etFechaFin"
+                                android:id="@+id/input_end_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
@@ -222,7 +222,7 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilHoraFin"
+                            android:id="@+id/input_layout_end_time"
                             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -232,12 +232,12 @@
                             android:paddingBottom="@dimen/_16dp"
                             app:endIconMode="none"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/tilFechaFin"
+                            app:layout_constraintStart_toEndOf="@+id/input_layout_end_date"
                             app:layout_constraintTop_toTopOf="parent"
                             app:startIconDrawable="@drawable/baseline_access_time_filled_24">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etHoraFin"
+                                android:id="@+id/input_end_time"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
@@ -266,12 +266,12 @@
                     android:paddingEnd="@dimen/_16dp">
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/textDivider4"
+                        android:id="@+id/text_title_evidence"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_16dp"
                         android:paddingBottom="@dimen/_8dp"
-                        android:text="@string/screen_card_evidence" />
+                        android:text="@string/ops_screen_card_title_evidence" />
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -280,22 +280,22 @@
                         android:layout_marginBottom="16dp">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilUploadFile"
+                            android:id="@+id/input_layout_upload_file"
                             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:hint="@string/input_file"
+                            android:hint="@string/ops_screen_hint_file"
                             android:paddingStart="0dp"
                             android:paddingEnd="8dp"
                             app:endIconMode="clear_text"
-                            app:helperText="@string/help_input_file"
-                            app:layout_constraintEnd_toStartOf="@+id/btnUploadFile"
+                            app:helperText="@string/ops_screen_helper_file"
+                            app:layout_constraintEnd_toStartOf="@+id/button_upload_save"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:startIconDrawable="@drawable/baseline_attach_file_24">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etUploadFile"
+                                android:id="@+id/input_upload_file"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
@@ -304,14 +304,14 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnUploadFile"
+                            android:id="@+id/button_upload_save"
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:paddingStart="8dp"
                             android:paddingEnd="0dp"
                             android:text="@string/button_select_file"
                             app:icon="@drawable/baseline_file_upload_24"
-                            app:layout_constraintBaseline_toBaselineOf="@id/tilUploadFile"
+                            app:layout_constraintBaseline_toBaselineOf="@id/input_layout_upload_file"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -322,7 +322,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSendDelivery"
+                android:id="@+id/button_send_ops"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16dp"
