@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="icon_color">#F2F2F2</color>
+    <color name="icon_color_toolbar">#101418</color>
 
     <color name="login_text_onSurface">#F7F9FF</color>
     <color name="login_input_background">#E6F7F9FF</color>

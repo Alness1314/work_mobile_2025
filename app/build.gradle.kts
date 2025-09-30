@@ -66,6 +66,9 @@ dependencies {
     implementation(libs.androidx.benchmark.common)
     ksp(libs.hilt.compiler)
 
+    //Preferences DataStore jetpack
+    implementation(libs.androidx.datastore.preferences)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

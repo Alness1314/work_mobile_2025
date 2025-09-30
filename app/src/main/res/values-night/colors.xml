@@ -3,6 +3,7 @@
     <color name="color_divider">#1F000000</color>
 
     <color name="icon_color">#101418</color>
+    <color name="icon_color_toolbar">#F2F2F2</color>
 
     <color name="login_text_onSurface">#F7F9FF</color>
     <color name="login_input_background">#CC101418</color>

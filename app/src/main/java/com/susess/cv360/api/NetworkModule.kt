@@ -1,6 +1,7 @@
 package com.susess.cv360.api
 
 import com.google.gson.Gson
+import com.susess.cv360.common.Endpoints
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,7 +17,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     private const val DEFAULT_TIMEOUT = 60L
-    private const val BASE_URL = "https://edfa0f071b78.ngrok-free.app"
+    private const val BASE_URL = Endpoints.BASE_URL
 
     @Provides
     @Singleton
