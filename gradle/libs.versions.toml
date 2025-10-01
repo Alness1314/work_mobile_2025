@@ -23,10 +23,15 @@ okhttp = "5.1.0"
 gson = "2.13.2"
 benchmarkCommon = "1.4.1"
 navitationSafeargsVersion = "2.9.5"
+roomRuntime = "2.8.1"
+threetenabp = "1.4.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+androidx-room-compiler = {module = "androidx.room:room-compiler", version.ref ="roomRuntime"}
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -47,6 +52,7 @@ retrofit = {module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit"
 retrofit-converter = {module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit"}
 okhttp-logging = {module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp"}
 androidx-benchmark-common = { group = "androidx.benchmark", name = "benchmark-common", version.ref = "benchmarkCommon" }
+threetenabp = { module = "com.jakewharton.threetenabp:threetenabp", version.ref = "threetenabp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

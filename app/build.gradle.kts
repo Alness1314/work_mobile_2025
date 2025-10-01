@@ -69,6 +69,14 @@ dependencies {
     //Preferences DataStore jetpack
     implementation(libs.androidx.datastore.preferences)
 
+    //Room Database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    //ThreeTenABP api moderna de fechas compatible con android antes del 8
+    implementation(libs.threetenabp)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
