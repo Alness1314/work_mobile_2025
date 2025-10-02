@@ -1,10 +1,10 @@
 package com.susess.cv360.ui.settings
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.susess.cv360.common.KeyFilters
 import com.susess.cv360.model.facility.FacilityResponse
 import com.susess.cv360.model.settings.SettingsEntity
 import com.susess.cv360.model.tank.TankResponse
@@ -12,6 +12,7 @@ import com.susess.cv360.repository.ApiRepository
 import com.susess.cv360.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,9 +35,8 @@ class SettingsViewModel @Inject constructor(
             _uiState.postValue(UiState.Loading)
             try {
                 val list = repositoryApi.findFacilityApi(headers, username)
-                Log.i("instalaciones cargadas viewmodel", list.size.toString())
                 _facilities.postValue(list)
-                _uiState.postValue(UiState.FacilitiesLoaded(list))
+                _uiState.postValue(UiState.Idle)
             }catch (e: Exception){
                 _uiState.postValue(UiState.Error(e.localizedMessage?: "Error cargando instalaciones"))
             }
@@ -49,18 +49,49 @@ class SettingsViewModel @Inject constructor(
             try {
                 val list = repositoryApi.findTanksApi(headers, facilty)
                 _tanks.postValue(list)
-                _uiState.postValue(UiState.TanksLoaded(list))
+                _uiState.postValue(UiState.Idle)
             }catch (e: Exception){
                 _uiState.postValue(UiState.Error(e.localizedMessage?: "Error cargando tanques"))
             }
         }
     }
 
+    fun saveSettings(facility: FacilityResponse, tank: TankResponse) {
+        viewModelScope.launch {
+            try {
+                val entity = SettingsEntity(
+                    id = UUID.randomUUID(),
+                    settingKey = KeyFilters.SETTING_KEY,
+                    facilityId = facility.publicKey,
+                    facilityName = facility.externalKey,
+                    tankId = tank.publicKey,
+                    tankName = tank.externalKey,
+                    productName = tank.producto.marcaComercial,
+                    productId = tank.producto.publicKey,
+                    productKey = tank.producto.claveSubProducto,
+                    unitMeasurement = tank.producto.unidadMedida
+                )
+                repositoryDb.saveSetting(entity)
+                _uiState.postValue(UiState.SettingCfgSaved(entity))
+            } catch (e: Exception) {
+                _uiState.postValue(UiState.Error(e.localizedMessage ?: "Error guardando configuración"))
+            }
+        }
+    }
+
+    fun loadDefaults() {
+        viewModelScope.launch {
+            val cfg = repositoryDb.findSetting()
+            if(cfg != null)
+                _uiState.postValue(UiState.DefaultsCfgLoaded(cfg))
+            else
+                _uiState.postValue(UiState.Error("No hay valores por defecto."))
+        }
+    }
+
     sealed class UiState {
         object Idle : UiState()
         object Loading : UiState()
-        data class FacilitiesLoaded(val facilities: List<FacilityResponse>) : UiState()
-        data class TanksLoaded(val tanks: List<TankResponse>) : UiState()
         data class SettingCfgSaved(val settingCfg: SettingsEntity) : UiState()
         data class DefaultsCfgLoaded(val settingCfg: SettingsEntity?) : UiState()
         data class Error(val message: String) : UiState()

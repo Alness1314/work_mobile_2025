@@ -1,5 +1,6 @@
 package com.susess.cv360.helpers
 
+import com.susess.cv360.common.KeyFilters
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,6 +15,8 @@ class SessionManager @Inject constructor() {
         username = null
         isLoggedIn = false
     }
+
+    fun authHeaders() = mapOf(KeyFilters.HEADER_AUTH to "Bearer ${token}")
 
     override fun toString(): String {
         return StringBuilder().append("token=${token} ")

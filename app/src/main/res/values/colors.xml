@@ -9,6 +9,8 @@
     <color name="login_text_onSurface">#F7F9FF</color>
     <color name="login_input_background">#E6F7F9FF</color>
 
+    <color name="background_wait_color">#B2F7F9FF</color>
+
     <!--color divider-->
     <color name="color_divider">#1F000000</color>
 

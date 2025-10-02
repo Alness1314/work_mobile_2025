@@ -20,12 +20,12 @@
 
     <!-- Settings Screen -->
     <string name="settings_screen_title">Preferencias</string>
-    <string name="settings_screen_card_title_facility">Instalaciones</string>
+    <string name="settings_screen_card_title_facility">Seleccionador de datos</string>
     <string name="settings_screen_hint_facility">Instalación</string>
     <string name="settings_screen_button_save">Guardar</string>
-    <string name="settings_screen_card_title_tank">Autotanque &amp; Producto</string>
     <string name="settings_screen_hint_tank">Autotanque</string>
-    <string name="settings_screen_helper">Selecciona una opción.</string>
+    <string name="settings_screen_helper_facility">Seleccione una instalacion.</string>
+    <string name="settings_screen_helper_tank">Seleccione un autotanque.</string>
     <string name="settings_screen_hint_product">Producto</string>
     <string name="settings_screen_helper_product">Asignación automática</string>
     <string name="settings_screen_hint_unit_measurement">Unidad de medida</string>
@@ -86,4 +86,9 @@
     <string name="ops_screen_helper_file">Ruta del archivo de evidencia.</string>
     <string name="button_select_file">Seleccionar</string>
     <string name="button_save_operation">Guardar</string>
+
+
+    <!--common-->
+    <string name="helper_required">requerido</string>
+    <string name="helper_not_email">Ingrese un correo electrónico válido.</string>
 </resources>

@@ -8,6 +8,8 @@
     <color name="login_text_onSurface">#F7F9FF</color>
     <color name="login_input_background">#CC101418</color>
 
+    <color name="background_wait_color">#B2101418</color>
+
     <!--color dark schema-->
     <color name="md_theme_primary">#9DCBFB</color>
     <color name="md_theme_onPrimary">#003355</color>

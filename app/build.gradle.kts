@@ -64,6 +64,7 @@ dependencies {
     //Inyeccion de dependencias
     implementation(libs.hilt.android)
     implementation(libs.androidx.benchmark.common)
+    implementation(libs.androidx.navigationevent)
     ksp(libs.hilt.compiler)
 
     //Preferences DataStore jetpack

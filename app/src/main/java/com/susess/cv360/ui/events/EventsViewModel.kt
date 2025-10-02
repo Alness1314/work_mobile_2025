@@ -1,11 +1,13 @@
-package com.susess.cv360.ui.about
+package com.susess.cv360.ui.events
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.susess.cv360.helpers.SessionManager
-import com.susess.cv360.model.about.AboutResponse
+import com.susess.cv360.model.events.EventRequest
+import com.susess.cv360.model.events.EventResponse
+import com.susess.cv360.model.events.TypeEventResponse
 import com.susess.cv360.repository.ApiRepository
 import com.susess.cv360.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,41 +15,59 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AboutViewModel @Inject constructor(
+class EventsViewModel@Inject constructor(
     private val repositoryDb: SettingsRepository,
     private val repositoryApi: ApiRepository,
     private val sessionManager: SessionManager
 ) : ViewModel() {
+
     private val _uiState = MutableLiveData<UiState>(UiState.Idle)
     val uiState: LiveData<UiState> get() = _uiState
 
-    // Eventos de navegación (usar LiveData normal porque son one-shot events)
+    private val _events = MutableLiveData<List<TypeEventResponse>>()
+    val eventLive: LiveData<List<TypeEventResponse>> = _events
+
     private val _navigationEvent = MutableLiveData<NavigationEvent>()
     val navigationEvent: LiveData<NavigationEvent> get() = _navigationEvent
 
-    fun loadAbout(){
+
+    fun loadTypeEvents(){
+        viewModelScope.launch {
+            _uiState.postValue(UiState.Loading)
+            try {
+                val result = repositoryApi.findEvents(sessionManager.authHeaders())
+                _events.postValue(result)
+                _uiState.postValue(UiState.EventsLoaded(result))
+            } catch (e: Exception) {
+                _uiState.postValue(UiState.Error("Error cargando eventos"))
+            }
+        }
+    }
+
+    fun sendEvent(request: EventRequest){
         viewModelScope.launch {
             _uiState.postValue(UiState.Loading)
             try {
                 val cfg = repositoryDb.findSetting()
                 if (cfg != null) {
-                    val headers = sessionManager.authHeaders()
-                    val about: AboutResponse = repositoryApi.findAbout(headers, cfg.facilityId)
-                    _uiState.postValue(UiState.AboutLoaded(about))
-                } else {
+                    val response: EventResponse = repositoryApi.createEvent(sessionManager.authHeaders(), cfg.facilityId, request)
+                    _uiState.postValue(UiState.SendEventApi(response))
+                }else{
                     // No hay configuración → lanzar navegación
                     _navigationEvent.postValue(NavigationEvent.ToDashboard)
                 }
-            }catch (e: Exception){
-                _uiState.postValue(UiState.Error(e.localizedMessage?: "Error al cargar Acerca de"))
+            } catch (e: Exception) {
+                _uiState.postValue(UiState.Error(e.localizedMessage?: "Error enviando bitácora"))
             }
         }
     }
 
+
     sealed class UiState {
         object Idle : UiState()
         object Loading : UiState()
-        data class AboutLoaded(val about: AboutResponse?) : UiState()
+        data class EventsLoaded(val listEvents: List<TypeEventResponse>) : UiState()
+        data class SendEventApi(val eventResponse: EventResponse?) : UiState()
         data class Error(val message: String) : UiState()
     }
 
