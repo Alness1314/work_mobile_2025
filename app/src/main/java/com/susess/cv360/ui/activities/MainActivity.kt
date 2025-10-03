@@ -2,28 +2,24 @@ package com.susess.cv360.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.snackbar.Snackbar
 import com.susess.cv360.R
 import com.susess.cv360.databinding.ActivityMainBinding
-import com.susess.cv360.helpers.SessionManager
 import com.susess.cv360.model.auth.AuthRequest
+import com.susess.cv360.validations.ValidationResult
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    @Inject lateinit var sessionManager: SessionManager
-
-    // inyectamos ViewModel con Hilt (by viewModels())
     private val loginViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,48 +34,83 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        Log.i("data session", sessionManager.toString())
-
         setupObservers()
         setupListeners()
     }
 
     private fun setupListeners() {
+        // Validar en cada cambio de texto
+        binding.inputUsername.doAfterTextChanged {
+            loginViewModel.validateFieldLogin("username",
+                binding.inputUsername.text.toString().trim()
+            )
+        }
+
+        binding.inputPassword.doAfterTextChanged {
+            loginViewModel.validateFieldLogin(
+                "password",
+                binding.inputPassword.text.toString().trim()
+            )
+        }
+
+        // Validar y loguear solo cuando se da click en login
         binding.buttonLogin.setOnClickListener {
-            val auth: AuthRequest = AuthRequest().apply {
-                username = binding.inputUsername.text.toString().trim()
-                password = binding.inputPassword.text.toString().trim()
+            val username = binding.inputUsername.text.toString().trim()
+            val password = binding.inputPassword.text.toString().trim()
+
+            loginViewModel.validateFieldLogin("username", username)
+            loginViewModel.validateFieldLogin("password", password)
+
+            if (loginViewModel.formState.value?.isFormValid == true) {
+                val auth = AuthRequest().apply {
+                    this.username = username
+                    this.password = password
+                }
+                loginViewModel.login(auth)
             }
-            loginViewModel.login(auth)
         }
     }
 
     private fun setupObservers() {
         loginViewModel.uiState.observe(this) { state ->
             when (state) {
-                is MainViewModel.UiState.Loading -> {
-                    binding.progressBar.isVisible = true
-                    binding.buttonLogin.isEnabled = false
-                }
-
+                is MainViewModel.UiState.Idle -> Unit
+                is MainViewModel.UiState.Loading -> showLoading(true)
                 is MainViewModel.UiState.Success -> {
-                    binding.progressBar.isVisible = false
-                    binding.buttonLogin.isEnabled = true
+                    showLoading(false)
                     goToDashboard(state.token, state.username)
                 }
-
                 is MainViewModel.UiState.Error -> {
-                    binding.progressBar.isVisible = false
-                    binding.buttonLogin.isEnabled = true
+                    showLoading(false)
                     Snackbar.make(binding.root, "Error: ${state.message}", Snackbar.LENGTH_LONG)
                         .show()
                 }
-
-                else -> Unit
             }
-
         }
 
+        loginViewModel.formState.observe(this){ formState ->
+            when(val result = formState.usernameResult){
+                is ValidationResult.Invalid -> {
+                    binding.inputLayoutUsername.error = result.message
+                }
+                ValidationResult.Valid -> {
+                    binding.inputLayoutUsername.error = null
+                }
+            }
+            when(val result = formState.passwordResult){
+                is ValidationResult.Invalid -> {
+                    binding.inputLayoutPassword.error = result.message
+                }
+                ValidationResult.Valid -> {
+                    binding.inputLayoutPassword.error = null
+                }
+            }
+        }
+    }
+
+    private fun showLoading(show: Boolean) {
+        binding.layoutProgressLogin.visibility = if (show) View.VISIBLE else View.GONE
+        binding.buttonLogin.isEnabled = !show
     }
 
     private fun goToDashboard(token: String?, username: String) {

@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.susess.cv360.helpers.SessionManager
+import com.susess.cv360.helpers.ValidateFieldsHelper.validateField
 import com.susess.cv360.model.events.EventRequest
 import com.susess.cv360.model.events.EventResponse
 import com.susess.cv360.model.events.TypeEventResponse
 import com.susess.cv360.repository.ApiRepository
 import com.susess.cv360.repository.SettingsRepository
+import com.susess.cv360.validations.ValidationResult
+import com.susess.cv360.validations.ValidationRules
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +29,9 @@ class EventsViewModel@Inject constructor(
 
     private val _events = MutableLiveData<List<TypeEventResponse>>()
     val eventLive: LiveData<List<TypeEventResponse>> = _events
+
+    private val _formState = MutableLiveData(FormState())
+    val formState: LiveData<FormState> = _formState
 
     private val _navigationEvent = MutableLiveData<NavigationEvent>()
     val navigationEvent: LiveData<NavigationEvent> get() = _navigationEvent
@@ -74,4 +80,71 @@ class EventsViewModel@Inject constructor(
     sealed class NavigationEvent {
         object ToDashboard : NavigationEvent()
     }
+
+    fun validateFieldEvents(field: String, value: String){
+        val validation = when (field) {
+            "description" -> validateField(
+                value,
+                listOf(ValidationRules.NOT_EMPTY)
+            )
+            "date" -> validateField(
+                value,
+                listOf(ValidationRules.NOT_EMPTY)
+            )
+            "time" -> validateField(
+                value,
+                listOf(ValidationRules.NOT_EMPTY)
+            )
+            "component" -> validateField(
+                value,
+                listOf(ValidationRules.NOT_EMPTY)
+            )
+            else -> ValidationResult.Valid // si el campo no está definido
+        }
+
+        val currentState = _formState.value ?: FormState()
+
+        val newState = when (field) {
+            "description" -> currentState.copy(
+                descriptionResult = validation,
+                isFormValid = validation is ValidationResult.Valid &&
+                        currentState.dateResult is ValidationResult.Valid &&
+                currentState.timeResult is ValidationResult.Valid &&
+                currentState.componentResult is ValidationResult.Valid
+            )
+            "date" -> currentState.copy(
+                dateResult = validation,
+                isFormValid = currentState.descriptionResult is ValidationResult.Valid &&
+                        validation is ValidationResult.Valid &&
+                        currentState.timeResult is ValidationResult.Valid &&
+                        currentState.componentResult is ValidationResult.Valid
+            )
+            "time" -> currentState.copy(
+                dateResult = validation,
+                isFormValid = currentState.descriptionResult is ValidationResult.Valid &&
+                        currentState.dateResult is ValidationResult.Valid &&
+                        validation is ValidationResult.Valid &&
+                        currentState.componentResult is ValidationResult.Valid
+            )
+            "component" -> currentState.copy(
+                dateResult = validation,
+                isFormValid = currentState.descriptionResult is ValidationResult.Valid &&
+                        currentState.dateResult is ValidationResult.Valid &&
+                        currentState.timeResult is ValidationResult.Valid &&
+                        validation is ValidationResult.Valid
+            )
+            else -> currentState
+        }
+
+        _formState.value = newState
+    }
+
 }
+
+data class FormState(
+    val descriptionResult: ValidationResult = ValidationResult.Valid,
+    val dateResult: ValidationResult = ValidationResult.Valid,
+    val timeResult: ValidationResult = ValidationResult.Valid,
+    val componentResult: ValidationResult = ValidationResult.Valid,
+    val isFormValid: Boolean = false
+)

@@ -74,7 +74,7 @@ class GenericRepository @Inject constructor(
                 else -> bodyStr
             }
         } else {
-            throw Exception("Error ${resp.code()}: ${resp.errorBody()?.string()}")
+            throw Exception("${resp.code()}: ${resp.errorBody()?.string()}")
         }
     }
 
@@ -90,7 +90,7 @@ class GenericRepository @Inject constructor(
             val bodyStr = resp.body()?.string() ?: return emptyList()
             return TypeHelper.listFromJson(bodyStr, clazz)
         } else {
-            throw Exception("Error ${resp.code()}: ${resp.errorBody()?.string()}")
+            throw Exception("${resp.code()}: ${resp.errorBody()?.string()}")
         }
     }
 }

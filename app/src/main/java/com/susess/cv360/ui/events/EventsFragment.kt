@@ -67,31 +67,20 @@ class EventsFragment : Fragment() {
 
     private fun setupListeners(){
         binding.buttonSend.setOnClickListener {
-            if (validateFields(binding.inputLayoutDescription, binding.inputLayoutComponent, binding.inputLayoutDate, binding.inputLayoutTime)) {
-                val numEventType = eventViewModel.eventLive.value
-                    ?.find { it.nombre == binding.autoCompleteEvents.text.toString() }
-                val request = EventRequest().apply {
-                    descripcionEvento = binding.inputDescripcion.text.toString()
-                    fechaYHoraEvento = "${binding.inputDate.text} ${binding.inputTime.text}"
-                    identificacionComponenteAlarma = binding.inputComponent.text.toString()
-                    tipoEvento = numEventType?.tipo ?: 1 // aquí obtienes el seleccionado
-                    usuarioResponsable = "usuario" // UsernameManager
-                }
-                eventViewModel.sendEvent(request)
+            val numEventType = eventViewModel.eventLive.value
+                ?.find { it.nombre == binding.autoCompleteEvents.text.toString() }
+            val request = EventRequest().apply {
+                descripcionEvento = binding.inputDescripcion.text.toString()
+                fechaYHoraEvento = "${binding.inputDate.text} ${binding.inputTime.text}"
+                identificacionComponenteAlarma = binding.inputComponent.text.toString()
+                tipoEvento = numEventType?.tipo ?: 1 // aquí obtienes el seleccionado
+                usuarioResponsable = "usuario" // UsernameManager
             }
+            eventViewModel.sendEvent(request)
         }
     }
 
-    private fun validateFields(vararg textFields: TextInputLayout): Boolean {
-        var isValid = true
-        for (textField in textFields) {
-            if (textField.editText?.text.toString().trim().isEmpty()) {
-                textField.error = getString(R.string.helper_required)
-                isValid = false
-            } else textField.error = null
-        }
-        return isValid
-    }
+
 
     private fun showLoading(show: Boolean) {
         binding.layoutProgressEvents.visibility = if (show) View.VISIBLE else View.GONE
