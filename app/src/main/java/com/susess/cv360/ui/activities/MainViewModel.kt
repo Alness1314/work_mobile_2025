@@ -35,8 +35,28 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.postValue(UiState.Loading)
             try {
-                val authResponse: AuthResponse = repo.post(url = Endpoints.AUTH, body = auth, clazz = AuthResponse::class.java) as AuthResponse
-                _uiState.postValue(UiState.Success(authResponse.token, auth.username))
+                val response = repo.post(url = Endpoints.AUTH, body = auth, clazz = AuthResponse::class.java)
+                if(response.isSuccessful){
+                    val authHeader = response.headers["Authorization"]
+                        ?: response.headers["authorization"] // por si viene en minúsculas
+
+                    val token = authHeader?.replace("Bearer ", "") ?: ""
+                    // También puedes obtener el body si viene en el cuerpo de la respuesta
+                    val authResponseBody = response.body
+
+                    // Usar el token del header o del body según tu API
+                    val finalToken = token.ifBlank {
+                        authResponseBody?.token ?: ""
+                    }
+
+                    if (finalToken.isNotBlank()) {
+                        _uiState.postValue(UiState.Success(finalToken, auth.username))
+                    } else {
+                        _uiState.postValue(UiState.Error("No se recibió token de autenticación"))
+                    }
+                }else{
+                    _uiState.postValue(UiState.Error("Error ${response.code}: ${response.rawBody}"))
+                }
             }catch (e: Exception){
                 _uiState.postValue(UiState.Error(e.localizedMessage ?: "Error de conexión"))
             }

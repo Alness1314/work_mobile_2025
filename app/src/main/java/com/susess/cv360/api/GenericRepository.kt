@@ -15,7 +15,7 @@ class GenericRepository @Inject constructor(
         queries: Map<String, String> = emptyMap(),
         clazz: Class<T>? = null,       // para objetos simples
         listType: Boolean = false      // si esperamos lista
-    ): Any? {
+    ): ApiResponse<T?> {
         val resp = api.get(url, headers, queries)
         return handleResponse(resp, clazz, listType)
     }
@@ -26,7 +26,7 @@ class GenericRepository @Inject constructor(
         headers: Map<String, String> = emptyMap(),
         clazz: Class<T>? = null,
         listType: Boolean = false
-    ): Any? {
+    ): ApiResponse<T?> {
         val resp = api.post(url, headers, body)
         return handleResponse(resp, clazz, listType)
     }
@@ -37,17 +37,19 @@ class GenericRepository @Inject constructor(
         headers: Map<String, String> = emptyMap(),
         clazz: Class<T>? = null,
         listType: Boolean = false
-    ): Any? {
+    ): ApiResponse<T?> {
         val resp = api.put(url, headers, body)
         return handleResponse(resp, clazz, listType)
     }
 
-    suspend fun delete(
+    suspend fun <T> delete(
         url: String,
-        headers: Map<String, String> = emptyMap()
-    ): Boolean {
+        headers: Map<String, String> = emptyMap(),
+        clazz: Class<T>? = null,
+        listType: Boolean = false
+    ): ApiResponse<T?> {
         val resp = api.delete(url, headers)
-        return resp.isSuccessful
+        return handleResponse(resp, clazz, listType)
     }
 
     suspend fun <T> postMultipart(
@@ -56,12 +58,88 @@ class GenericRepository @Inject constructor(
         headers: Map<String, String> = emptyMap(),
         clazz: Class<T>? = null,
         listType: Boolean = false
-    ): Any? {
+    ): ApiResponse<T?> {
         val resp = api.postMultipart(url, headers, parts)
         return handleResponse(resp, clazz, listType)
     }
 
     private fun <T> handleResponse(
+        resp: retrofit2.Response<okhttp3.ResponseBody>,
+        clazz: Class<T>?,
+        listType: Boolean
+    ): ApiResponse<T?> {
+        // Extraer headers - FORMA CORREGIDA
+        val responseHeaders = mutableMapOf<String, String>()
+        resp.headers().names().forEach { headerName ->
+            val headerValue = resp.headers()[headerName]
+            if (headerValue != null) {
+                responseHeaders[headerName] = headerValue
+            }
+        }
+
+        val bodyStr = resp.body()?.string() ?: ""
+
+        return if (resp.isSuccessful) {
+            try {
+                val parsedBody = when {
+                    clazz != null && listType -> {
+                        // Para listas
+                        TypeHelper.listFromJson(bodyStr, clazz) as? T
+                    }
+                    clazz != null -> {
+                        // Para objetos individuales
+                        TypeHelper.fromJson(bodyStr, clazz)
+                    }
+                    else -> {
+                        // Para respuestas sin mapeo específico
+                        bodyStr as? T
+                    }
+                }
+
+                ApiResponse(
+                    isSuccessful = true,
+                    code = resp.code(),
+                    headers = responseHeaders,
+                    body = parsedBody,
+                    rawBody = bodyStr
+                )
+            } catch (e: Exception) {
+                // En caso de error en el parsing
+                ApiResponse(
+                    isSuccessful = false,
+                    code = resp.code(),
+                    headers = responseHeaders,
+                    body = null,
+                    rawBody = bodyStr
+                )
+            }
+        } else {
+            // Respuesta no exitosa
+            ApiResponse(
+                isSuccessful = false,
+                code = resp.code(),
+                headers = responseHeaders,
+                body = null,
+                rawBody = bodyStr
+            )
+        }
+    }
+
+    // Método específico para listas (manteniendo compatibilidad)
+    suspend fun <T> getList(
+        url: String,
+        headers: Map<String, String> = emptyMap(),
+        queries: Map<String, String> = emptyMap(),
+        clazz: Class<T>
+    ): ApiResponse<List<T>> {
+        val resp = api.get(url, headers, queries)
+        return handleResponse(resp, clazz, true) as ApiResponse<List<T>>
+    }
+
+
+
+
+    /*private fun <T> handleResponse(
         resp: retrofit2.Response<okhttp3.ResponseBody>,
         clazz: Class<T>?,
         listType: Boolean
@@ -92,5 +170,5 @@ class GenericRepository @Inject constructor(
         } else {
             throw Exception("${resp.code()}: ${resp.errorBody()?.string()}")
         }
-    }
+    }*/
 }

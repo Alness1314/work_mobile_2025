@@ -18,10 +18,15 @@ class ApiRepository @Inject constructor(
         headers: Map<String, String>,
         username: String
     ): List<FacilityResponse> {
-        return apiService.getList(
+        val response = apiService.getList(
             Endpoints.FACILITIES, headers,
             mapOf(KeyFilters.FILTER_USERNAME to username), FacilityResponse::class.java
         )
+        return if (response.isSuccessful) {
+            response.body ?: emptyList()
+        } else {
+            emptyList()
+        }
     }
 
     suspend fun findTanksApi(
@@ -29,7 +34,12 @@ class ApiRepository @Inject constructor(
         facilityKey: String
     ): List<TankResponse> {
         val url = String.format(Endpoints.TANKS, facilityKey)
-        return apiService.getList(url, headers, clazz = TankResponse::class.java)
+        val response = apiService.getList(url, headers, clazz = TankResponse::class.java)
+        return if (response.isSuccessful) {
+            response.body ?: emptyList()
+        } else {
+            emptyList()
+        }
 
     }
 
@@ -38,15 +48,23 @@ class ApiRepository @Inject constructor(
         facilityKey: String
     ): AboutResponse {
         val url = String.format(Endpoints.ABOUT, facilityKey)
-        return apiService.get(url, headers, clazz = AboutResponse::class.java) as AboutResponse
+        val response = apiService.get<AboutResponse>(url, headers, clazz = AboutResponse::class.java)
+
+        return response.body?: AboutResponse()
     }
 
     suspend fun findEvents(headers: Map<String, String>): List<TypeEventResponse> {
-        return apiService.getList(
+        val response = apiService.getList<TypeEventResponse>(
             Endpoints.EVENT_TYPE,
             headers,
             clazz = TypeEventResponse::class.java
         )
+        return if (response.isSuccessful) {
+            response.body ?: emptyList()
+        } else {
+            emptyList()
+        }
+
     }
 
     suspend fun createEvent(
@@ -55,6 +73,8 @@ class ApiRepository @Inject constructor(
         request: EventRequest
     ): EventResponse {
         val url = String.format(Endpoints.EVENT_SEND, facilityKey)
-        return apiService.post(url, request,headers, EventResponse::class.java) as EventResponse
+        val response = apiService.post<EventResponse>(url, request, headers, EventResponse::class.java)
+
+        return response.body ?: EventResponse()
     }
 }

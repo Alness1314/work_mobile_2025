@@ -50,7 +50,7 @@ class AboutFragment : Fragment() {
                         binding.textNombre.text = about.shortName
                         binding.textVersion.text = about.version
                         binding.textDerechos.text = about.copyright
-                        binding.textLicencia.text = about.contribuyente.razonSocial
+                        binding.textLicencia.text = about.contribuyente?.razonSocial
                         binding.textProveedor.text = about.serviceProvider
                         binding.textNumeroSerie.text = about.numeroLicencia
                     }

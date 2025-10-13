@@ -2,6 +2,7 @@ package com.susess.cv360.common
 
 object Endpoints {
     const val BASE_URL = "https://77d2e0e401e1.ngrok-free.app"
+    const val URL_DEVELOPMENT = "https://cloud.controlvolumetrico360.com:7080"
     const val AUTH = "/v1/auth"
     const val FACILITIES = "/v1/cv/instalaciones"
     const val TANKS = "/v1/cv/instalaciones/%s/tanques/int"

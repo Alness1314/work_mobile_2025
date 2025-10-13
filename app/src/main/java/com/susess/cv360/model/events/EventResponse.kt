@@ -1,16 +1,16 @@
 package com.susess.cv360.model.events
 
 data class EventResponse(
-    var publicKey: String,
-    var externalKey: String,
-    var tipoBitacora: String,
-    var numeroRegistro: Int,
-    var fechaYHoraEvento: String,
-    var usuarioResponsable: String,
-    var tipoEvento: TypeEventResponse,
-    var descripcionEvento: String,
-    var identificacionComponenteAlarma: String,
-    var cabeceraOrigen: String,
-    var macAddress: String,
-    var iporigen: String
+    var publicKey: String? = null,
+    var externalKey: String? = null,
+    var tipoBitacora: String? = null,
+    var numeroRegistro: Int? = null,
+    var fechaYHoraEvento: String? = null,
+    var usuarioResponsable: String? = null,
+    var tipoEvento: TypeEventResponse? = null,
+    var descripcionEvento: String? = null,
+    var identificacionComponenteAlarma: String? = null,
+    var cabeceraOrigen: String? = null,
+    var macAddress: String? = null,
+    var iporigen: String? = null
 )

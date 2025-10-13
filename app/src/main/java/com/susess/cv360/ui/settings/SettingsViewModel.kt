@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.susess.cv360.common.KeyFilters
+import com.susess.cv360.common.ProductosEnum
 import com.susess.cv360.model.facility.FacilityResponse
 import com.susess.cv360.model.settings.SettingsEntity
 import com.susess.cv360.model.tank.TankResponse
@@ -14,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.math.tan
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -58,6 +60,7 @@ class SettingsViewModel @Inject constructor(
 
     fun saveSettings(facility: FacilityResponse, tank: TankResponse) {
         viewModelScope.launch {
+            val um = getUnitMeasurement(tank.producto.claveSubProducto)
             try {
                 val entity = SettingsEntity(
                     id = UUID.randomUUID(),
@@ -69,7 +72,7 @@ class SettingsViewModel @Inject constructor(
                     productName = tank.producto.marcaComercial,
                     productId = tank.producto.publicKey,
                     productKey = tank.producto.claveSubProducto,
-                    unitMeasurement = tank.producto.unidadMedida
+                    unitMeasurement = um
                 )
                 repositoryDb.saveSetting(entity)
                 _uiState.postValue(UiState.SettingCfgSaved(entity))
@@ -78,6 +81,11 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
+
+    private fun getUnitMeasurement(productKey: String): String {
+        return ProductosEnum.obtenerProductoPorClaveSubproducto(productKey)?.unidadMedida ?: "UM03"
+    }
+
 
     fun loadDefaults() {
         viewModelScope.launch {

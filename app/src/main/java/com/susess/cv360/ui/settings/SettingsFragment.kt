@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
+import com.susess.cv360.common.ProductosEnum
 import com.susess.cv360.databinding.FragmentSettingsBinding
 import com.susess.cv360.helpers.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -118,16 +119,21 @@ class SettingsFragment : Fragment() {
                 ?.find { it.externalKey == binding.autoCompleteTanks.text.toString() }
 
             if (facility != null && tank != null) {
+                val um = getUnitMeasurement(tank.producto.claveSubProducto)
                 settingsViewModel.saveSettings(facility, tank)
                 binding.textFacilitySet.text = facility.externalKey
                 binding.textTankSet.text = tank.externalKey
                 binding.textProductSet.text = tank.producto.marcaComercial
-                binding.textUnitMeasurementSet.text = tank.producto.unidadMedida
+                binding.textUnitMeasurementSet.text = um
             } else {
                 Snackbar.make(binding.root, "Debes seleccionar instalación y tanque", Snackbar.LENGTH_SHORT).show()
             }
 
         }
+    }
+
+    private fun getUnitMeasurement(productKey: String): String {
+        return ProductosEnum.obtenerProductoPorClaveSubproducto(productKey)?.unidadMedida ?: "UM03"
     }
 
     private fun showLoading(show: Boolean) {
