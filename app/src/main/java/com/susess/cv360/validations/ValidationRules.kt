@@ -15,4 +15,9 @@ object ValidationRules {
         regex = Regex("^(?!\\s*$).+"), // Al menos un carácter no vacío
         errorMessage = "Este campo es obligatorio."
     )
+
+    val EVENT_TYPE = ValidationRule(
+        regex = Regex(""),
+        errorMessage = "Debes seleccionar un tipo de evento."
+    )
 }

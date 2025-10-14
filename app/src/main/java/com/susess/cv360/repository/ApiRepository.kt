@@ -1,5 +1,6 @@
 package com.susess.cv360.repository
 
+import android.util.Log
 import com.susess.cv360.api.GenericRepository
 import com.susess.cv360.common.Endpoints
 import com.susess.cv360.common.KeyFilters
@@ -50,6 +51,15 @@ class ApiRepository @Inject constructor(
         val url = String.format(Endpoints.ABOUT, facilityKey)
         val response = apiService.get<AboutResponse>(url, headers, clazz = AboutResponse::class.java)
 
+        // VERIFICACIÓN EXPLÍCITA DE ERROR
+        if (!response.isSuccessful) {
+            // Para debug - imprime lo que recibiste
+            Log.i("ApiRepository","ERROR API: Code=${response.code}, Body=${response.rawBody}")
+
+            // Lanza excepción con detalles del error
+            throw Exception("ERROR API: Code=${response.code}, Body=${response.rawBody?:"N/D"}")
+        }
+
         return response.body?: AboutResponse()
     }
 
@@ -75,6 +85,17 @@ class ApiRepository @Inject constructor(
         val url = String.format(Endpoints.EVENT_SEND, facilityKey)
         val response = apiService.post<EventResponse>(url, request, headers, EventResponse::class.java)
 
+        // VERIFICACIÓN EXPLÍCITA DE ERROR
+        if (!response.isSuccessful) {
+            // Para debug - imprime lo que recibiste
+            Log.i("ApiRepository","ERROR API: Code=${response.code}, Body=${response.rawBody}")
+
+            // Lanza excepción con detalles del error
+            throw Exception("ERROR API: Code=${response.code}, Body=${response.rawBody?:"N/D"}")
+        }
+
         return response.body ?: EventResponse()
     }
+
+
 }

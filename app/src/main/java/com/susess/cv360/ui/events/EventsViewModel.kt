@@ -1,9 +1,11 @@
 package com.susess.cv360.ui.events
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.RoomOpenDelegate
 import com.susess.cv360.helpers.SessionManager
 import com.susess.cv360.helpers.ValidateFieldsHelper.validateField
 import com.susess.cv360.model.events.EventRequest
@@ -33,6 +35,9 @@ class EventsViewModel@Inject constructor(
     private val _formState = MutableLiveData(FormState())
     val formState: LiveData<FormState> = _formState
 
+    private val _currentUser = MutableLiveData<String>()
+    val currentUser: LiveData<String> = _currentUser
+
     private val _navigationEvent = MutableLiveData<NavigationEvent>()
     val navigationEvent: LiveData<NavigationEvent> get() = _navigationEvent
 
@@ -47,6 +52,15 @@ class EventsViewModel@Inject constructor(
             } catch (e: Exception) {
                 _uiState.postValue(UiState.Error("Error cargando eventos"))
             }
+        }
+    }
+
+    fun getCurrentUser(){
+        viewModelScope.launch {
+            // No necesitas Loading state para esto
+            Log.i("EventsViewModel", "getCurrentUser: ${sessionManager.username}")
+            val user = sessionManager.username ?: "Sistema"
+            _currentUser.postValue(user)
         }
     }
 
@@ -99,6 +113,10 @@ class EventsViewModel@Inject constructor(
                 value,
                 listOf(ValidationRules.NOT_EMPTY)
             )
+            "typeEvent" -> validateField(
+                value,
+                listOf(ValidationRules.NOT_EMPTY)
+            )
             else -> ValidationResult.Valid // si el campo no está definido
         }
 
@@ -110,27 +128,39 @@ class EventsViewModel@Inject constructor(
                 isFormValid = validation is ValidationResult.Valid &&
                         currentState.dateResult is ValidationResult.Valid &&
                 currentState.timeResult is ValidationResult.Valid &&
+                        currentState.typeEventResult is ValidationResult.Valid &&
                 currentState.componentResult is ValidationResult.Valid
             )
             "date" -> currentState.copy(
-                dateResult = validation,
+                dateResult = validation, // ← CORREGIDO: era dateResult para todos
                 isFormValid = currentState.descriptionResult is ValidationResult.Valid &&
                         validation is ValidationResult.Valid &&
                         currentState.timeResult is ValidationResult.Valid &&
+                        currentState.typeEventResult is ValidationResult.Valid &&
                         currentState.componentResult is ValidationResult.Valid
             )
             "time" -> currentState.copy(
-                dateResult = validation,
+                timeResult = validation, // ← CORREGIDO: ahora es timeResult
                 isFormValid = currentState.descriptionResult is ValidationResult.Valid &&
                         currentState.dateResult is ValidationResult.Valid &&
                         validation is ValidationResult.Valid &&
+                        currentState.typeEventResult is ValidationResult.Valid &&
                         currentState.componentResult is ValidationResult.Valid
             )
             "component" -> currentState.copy(
-                dateResult = validation,
+                componentResult = validation, // ← CORREGIDO: ahora es componentResult
                 isFormValid = currentState.descriptionResult is ValidationResult.Valid &&
                         currentState.dateResult is ValidationResult.Valid &&
                         currentState.timeResult is ValidationResult.Valid &&
+                        currentState.typeEventResult is ValidationResult.Valid &&
+                        validation is ValidationResult.Valid
+            )
+            "typeEvent" -> currentState.copy(
+                typeEventResult = validation, // ← CORREGIDO: ahora es componentResult
+                isFormValid = currentState.descriptionResult is ValidationResult.Valid &&
+                        currentState.dateResult is ValidationResult.Valid &&
+                        currentState.timeResult is ValidationResult.Valid &&
+                        currentState.componentResult is ValidationResult.Valid &&
                         validation is ValidationResult.Valid
             )
             else -> currentState
@@ -146,5 +176,6 @@ data class FormState(
     val dateResult: ValidationResult = ValidationResult.Valid,
     val timeResult: ValidationResult = ValidationResult.Valid,
     val componentResult: ValidationResult = ValidationResult.Valid,
+    val typeEventResult: ValidationResult = ValidationResult.Valid,
     val isFormValid: Boolean = false
 )
