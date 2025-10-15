@@ -38,8 +38,8 @@ class EventsViewModel@Inject constructor(
     private val _currentUser = MutableLiveData<String>()
     val currentUser: LiveData<String> = _currentUser
 
-    private val _navigationEvent = MutableLiveData<NavigationEvent>()
-    val navigationEvent: LiveData<NavigationEvent> get() = _navigationEvent
+    private val _navigationEvent = MutableLiveData<NavigationEventAbout>()
+    val navigationEvent: LiveData<NavigationEventAbout> get() = _navigationEvent
 
 
     fun loadTypeEvents(){
@@ -74,7 +74,7 @@ class EventsViewModel@Inject constructor(
                     _uiState.postValue(UiState.SendEventApi(response))
                 }else{
                     // No hay configuración → lanzar navegación
-                    _navigationEvent.postValue(NavigationEvent.ToDashboard)
+                    _navigationEvent.postValue(NavigationEventAbout.ToDashboard)
                 }
             } catch (e: Exception) {
                 _uiState.postValue(UiState.Error(e.localizedMessage?: "Error enviando bitácora"))
@@ -91,8 +91,8 @@ class EventsViewModel@Inject constructor(
         data class Error(val message: String) : UiState()
     }
 
-    sealed class NavigationEvent {
-        object ToDashboard : NavigationEvent()
+    sealed class NavigationEventAbout {
+        object ToDashboard : NavigationEventAbout()
     }
 
     fun validateFieldEvents(field: String, value: String){
@@ -179,3 +179,4 @@ data class FormState(
     val typeEventResult: ValidationResult = ValidationResult.Valid,
     val isFormValid: Boolean = false
 )
+

@@ -1,6 +1,9 @@
 package com.susess.cv360.ui.events
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +11,14 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 import com.susess.cv360.R
 import com.susess.cv360.databinding.FragmentEventsBinding
-import com.susess.cv360.helpers.SessionManager
 import com.susess.cv360.model.events.EventRequest
 import com.susess.cv360.ui.pickers.DatetimePickers
 import com.susess.cv360.validations.ValidationResult
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class EventsFragment: Fragment() {
@@ -30,8 +31,6 @@ class EventsFragment: Fragment() {
     private val adapterEvents by lazy {
         ArrayAdapter(requireContext(), R.layout.item_list, mutableListOf<String>())
     }
-
-    private var username: String? = null;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,8 +66,11 @@ class EventsFragment: Fragment() {
                 is EventsViewModel.UiState.SendEventApi -> {
                     showLoading(false)
                     Snackbar.make(binding.root, "Bitacora enviada con exito.", Snackbar.LENGTH_SHORT).show()
-
                     clearForm()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        findNavController().navigate(R.id.action_navigation_events_to_navigation_dashboard)
+                    }, 1500)
+
                 }
             }
 
@@ -109,6 +111,24 @@ class EventsFragment: Fragment() {
                     binding.inputLayoutTime.error = null
                 }
             }
+
+            when(val result = formState.typeEventResult){
+                is ValidationResult.Invalid -> {
+                    binding.inputLayoutTypeEvents.error = result.message
+                }
+                ValidationResult.Valid -> {
+                    binding.inputLayoutTypeEvents.error = null
+                }
+            }
+        }
+
+        // Observamos los eventos de navegación
+        eventViewModel.navigationEvent.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                is EventsViewModel.NavigationEventAbout.ToDashboard -> {
+                    findNavController().navigate(R.id.action_navigation_events_to_navigation_dashboard)
+                }
+            }
         }
     }
 
@@ -132,8 +152,14 @@ class EventsFragment: Fragment() {
 
         binding.buttonSend.setOnClickListener {
             val resquest = genRequest()
-            if (eventViewModel.formState.value?.isFormValid == true)
+            val formState = eventViewModel.formState.value!!
+            Log.i("EVENTS", formState.isFormValid.toString())
+            if(formState.isFormValid){
                 eventViewModel.sendEvent(resquest)
+            }else{
+                Snackbar.make(binding.root, "Por favor ingrese todos los campos.", Snackbar.LENGTH_SHORT).show()
+            }
+
         }
 
         binding.inputComponent.doAfterTextChanged {
@@ -148,8 +174,14 @@ class EventsFragment: Fragment() {
         binding.inputDescripcion.doAfterTextChanged {
             eventViewModel.validateFieldEvents("description", binding.inputDescripcion.text.toString())
         }
-        binding.autoCompleteEvents.doAfterTextChanged {
-            eventViewModel.validateFieldEvents("typeEvent", binding.autoCompleteEvents.text.toString())
+        binding.autoCompleteEvents.apply {
+            doAfterTextChanged {
+                eventViewModel.validateFieldEvents("typeEvent", text.toString())
+            }
+            setOnItemClickListener { _, _, _, _ ->
+                val selected = text.toString()
+                eventViewModel.validateFieldEvents("typeEvent", selected)
+            }
         }
     }
 
@@ -169,13 +201,13 @@ class EventsFragment: Fragment() {
         eventViewModel.validateFieldEvents("description", descripcionEvento)
         eventViewModel.validateFieldEvents("typeEvent", binding.autoCompleteEvents.text.toString())
 
-        val request = EventRequest().apply {
-            fechaYHoraEvento
-            usuarioResponsable
-            tipoEvento
-            descripcionEvento
-            identificacionComponenteAlarma
-        }
+        val request = EventRequest(
+            fechaYHoraEvento = fechaYHoraEvento,
+            descripcionEvento = descripcionEvento,
+            tipoEvento = tipoEvento,
+            identificacionComponenteAlarma = identificacionComponenteAlarma,
+            usuarioResponsable = usuarioResponsable,
+        )
         return request
     }
 
@@ -187,4 +219,5 @@ class EventsFragment: Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

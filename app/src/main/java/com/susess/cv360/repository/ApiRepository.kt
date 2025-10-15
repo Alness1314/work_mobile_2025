@@ -5,10 +5,12 @@ import com.susess.cv360.api.GenericRepository
 import com.susess.cv360.common.Endpoints
 import com.susess.cv360.common.KeyFilters
 import com.susess.cv360.model.about.AboutResponse
+import com.susess.cv360.model.deliveries.DeliveryResponse
 import com.susess.cv360.model.events.EventRequest
 import com.susess.cv360.model.events.EventResponse
 import com.susess.cv360.model.events.TypeEventResponse
 import com.susess.cv360.model.facility.FacilityResponse
+import com.susess.cv360.model.receptions.ReceptionResponse
 import com.susess.cv360.model.tank.TankResponse
 import javax.inject.Inject
 
@@ -95,6 +97,34 @@ class ApiRepository @Inject constructor(
         }
 
         return response.body ?: EventResponse()
+    }
+
+    suspend fun findReceptionsApi(
+        headers: Map<String, String>,
+        queries: Map<String, String>,
+        facilityKey: String
+    ): List<ReceptionResponse> {
+        val url = String.format(Endpoints.TANK_RECEPTIONS, facilityKey)
+        val response = apiService.getList(url, queries = queries, headers = headers, clazz = ReceptionResponse::class.java)
+        return if (response.isSuccessful) {
+            response.body ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
+    suspend fun findDeliveriesApi(
+        headers: Map<String, String>,
+        queries: Map<String, String>,
+        facilityKey: String
+    ): List<DeliveryResponse> {
+        val url = String.format(Endpoints.TANK_DELIVERIES, facilityKey)
+        val response = apiService.getList(url, queries = queries, headers = headers, clazz = DeliveryResponse::class.java)
+        return if (response.isSuccessful) {
+            response.body ?: emptyList()
+        } else {
+            emptyList()
+        }
     }
 
 

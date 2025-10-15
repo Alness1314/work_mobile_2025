@@ -36,6 +36,16 @@ object DateTimeUtils {
         return offsetDateTime.format(formatterOut)
     }
 
+    fun formatOffsetDateTimeToDateTime2(dateTime: String): String {
+        val formatterIn = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS xxxxx")
+        val formatterOut = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+
+        val localDateTime = LocalDateTime.parse(dateTime, formatterIn)
+        val offsetDateTime = OffsetDateTime.of(localDateTime, OffsetDateTime.now().offset)
+
+        return offsetDateTime.format(formatterOut)
+    }
+
     fun formatearHora(hora: Int, minutos: Int): String {
         return LocalTime.of(hora, minutos, obtenerSegundos())
             .format(DateTimeFormatter.ofPattern("HH:mm:ss"))
