@@ -117,30 +117,6 @@
                             android:inputType="text"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_layout_unit_measurement"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/settings_screen_hint_unit_measurement"
-                        android:enabled="false"
-                        app:helperText="@string/settings_screen_helper_product"
-                        app:endIconMode="none"
-                        android:paddingStart="@dimen/_16dp"
-                        android:paddingEnd="@dimen/_16dp"
-                        android:paddingTop="@dimen/_16dp"
-                        app:startIconDrawable="@drawable/unit_measurement_settings_24dp"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_unit_measurement"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:clickable="false"
-                            android:maxLength="128"
-                            android:inputType="text"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_select_tank"
                         android:layout_width="wrap_content"
@@ -151,129 +127,6 @@
                         android:layout_marginEnd="@dimen/_16dp"
                         android:layout_marginBottom="@dimen/_16dp"
                         />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_info_data_save"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/_16dp"
-                app:cardBackgroundColor="@color/md_theme_surfaceContainerHighest"
-                style="@style/Widget.Material3.CardView.Filled"
-                app:layout_constraintTop_toBottomOf="@+id/card_tank">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_16dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_screen_card_title_save_values"
-                        android:paddingBottom="@dimen/_8dp"
-                        style="@style/TextAppearance.Material3.TitleMedium"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/_16dp"
-                        android:layout_marginBottom="@dimen/_16dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/settings_screen_hint_facility"
-                            android:textStyle="bold"
-                            style="@style/TextAppearance.Material3.BodyMedium" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/text_facility_set"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            tools:text="ALM-0001"
-                            android:textStyle="normal"
-                            style="@style/TextAppearance.Material3.BodyMedium" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/_16dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/settings_screen_hint_tank"
-                            android:textStyle="bold"
-                            style="@style/TextAppearance.Material3.BodyMedium" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/text_tank_set"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            tools:text="TX-ALM-0001"
-                            android:textStyle="normal"
-                            style="@style/TextAppearance.Material3.BodyMedium" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/_16dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/settings_screen_hint_product"
-                            android:textStyle="bold"
-                            style="@style/TextAppearance.Material3.BodyMedium" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/text_product_set"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            tools:text="Gasolina regular"
-                            android:textStyle="normal"
-                            style="@style/TextAppearance.Material3.BodyMedium" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/_16dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/settings_screen_hint_unit_measurement"
-                            android:textStyle="bold"
-                            style="@style/TextAppearance.Material3.BodyMedium" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/text_unit_measurement_set"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            tools:text="Litros"
-                            android:textStyle="normal"
-                            style="@style/TextAppearance.Material3.BodyMedium" />
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -307,7 +160,5 @@
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

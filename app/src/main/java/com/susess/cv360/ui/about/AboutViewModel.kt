@@ -8,7 +8,9 @@ import com.susess.cv360.helpers.SessionManager
 import com.susess.cv360.model.about.AboutResponse
 import com.susess.cv360.repository.ApiRepository
 import com.susess.cv360.repository.SettingsRepository
+import com.susess.cv360.ui.events.EventsViewModel.NavigationEventAbout
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,7 +38,10 @@ class AboutViewModel @Inject constructor(
                     _uiState.postValue(UiState.AboutLoaded(about))
                 } else {
                     // No hay configuración → lanzar navegación
+                    delay(500)
+                    _uiState.postValue(UiState.Error("No hay configuración disponible"))
                     _navigationEvent.postValue(NavigationEvent.ToDashboard)
+                    //throw Exception("No hay configuración disponible")
                 }
             }catch (e: Exception){
                 _uiState.postValue(UiState.Error(e.localizedMessage?: "Error al cargar Acerca de"))

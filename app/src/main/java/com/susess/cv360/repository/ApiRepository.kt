@@ -5,11 +5,13 @@ import com.susess.cv360.api.GenericRepository
 import com.susess.cv360.common.Endpoints
 import com.susess.cv360.common.KeyFilters
 import com.susess.cv360.model.about.AboutResponse
+import com.susess.cv360.model.deliveries.DeliveryRequest
 import com.susess.cv360.model.deliveries.DeliveryResponse
 import com.susess.cv360.model.events.EventRequest
 import com.susess.cv360.model.events.EventResponse
 import com.susess.cv360.model.events.TypeEventResponse
 import com.susess.cv360.model.facility.FacilityResponse
+import com.susess.cv360.model.receptions.ReceptionRequest
 import com.susess.cv360.model.receptions.ReceptionResponse
 import com.susess.cv360.model.tank.TankResponse
 import javax.inject.Inject
@@ -125,6 +127,48 @@ class ApiRepository @Inject constructor(
         } else {
             emptyList()
         }
+    }
+
+    suspend fun sendReception(
+        headers: Map<String, String>,
+        facilityKey: String,
+        tankKey: String,
+        request: ReceptionRequest
+    ): ReceptionResponse{
+        val url = String.format(Endpoints.TANK_SEND_RECEPTION, facilityKey, tankKey)
+        val response = apiService.post<ReceptionResponse>(url, request, headers, ReceptionResponse::class.java)
+
+        // VERIFICACIÓN EXPLÍCITA DE ERROR
+        if (!response.isSuccessful) {
+            // Para debug - imprime lo que recibiste
+            Log.i("ApiRepository","ERROR API: Code=${response.code}, Body=${response.rawBody}")
+
+            // Lanza excepción con detalles del error
+            throw Exception("ERROR API: Code=${response.code}, Body=${response.rawBody?:"N/D"}")
+        }
+
+        return response.body ?: ReceptionResponse()
+    }
+
+    suspend fun sendDelivery(
+        headers: Map<String, String>,
+        facilityKey: String,
+        tankKey: String,
+        request: DeliveryRequest
+    ): DeliveryResponse{
+        val url = String.format(Endpoints.TANK_SEND_DELIVERY, facilityKey, tankKey)
+        val response = apiService.post<DeliveryResponse>(url, request, headers, DeliveryResponse::class.java)
+
+        // VERIFICACIÓN EXPLÍCITA DE ERROR
+        if (!response.isSuccessful) {
+            // Para debug - imprime lo que recibiste
+            Log.i("ApiRepository","ERROR API: Code=${response.code}, Body=${response.rawBody}")
+
+            // Lanza excepción con detalles del error
+            throw Exception("ERROR API: Code=${response.code}, Body=${response.rawBody?:"N/D"}")
+        }
+
+        return response.body ?: DeliveryResponse()
     }
 
 

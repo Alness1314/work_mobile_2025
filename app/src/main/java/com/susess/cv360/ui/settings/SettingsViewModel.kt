@@ -11,11 +11,11 @@ import com.susess.cv360.model.settings.SettingsEntity
 import com.susess.cv360.model.tank.TankResponse
 import com.susess.cv360.repository.ApiRepository
 import com.susess.cv360.repository.SettingsRepository
+import com.susess.cv360.ui.events.EventsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
-import kotlin.math.tan
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -86,14 +86,15 @@ class SettingsViewModel @Inject constructor(
         return ProductosEnum.obtenerProductoPorClaveSubproducto(productKey)?.unidadMedida ?: "UM03"
     }
 
-
     fun loadDefaults() {
         viewModelScope.launch {
+            _uiState.postValue(UiState.Loading)
             val cfg = repositoryDb.findSetting()
-            if(cfg != null)
-                _uiState.postValue(UiState.DefaultsCfgLoaded(cfg))
-            else
+            if(cfg == null){
                 _uiState.postValue(UiState.Error("No hay valores por defecto."))
+            }else{
+                _uiState.postValue(UiState.DefaultsCfgLoaded(cfg))
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.susess.cv360.R
@@ -67,6 +68,15 @@ class DeliveriesFragment : Fragment() {
             }
         }
 
+        devliveriesViewModel.navigationEvent.observe(viewLifecycleOwner){ event ->
+            when(event){
+                is DeliveriesViewModel.NavigationEventDeliveries.ToDashboard ->{
+                    findNavController().navigate(R.id.action_navigation_delivery_to_navigation_dashboard)
+                }
+            }
+
+        }
+
     }
 
     fun initValues(){
@@ -95,6 +105,11 @@ class DeliveriesFragment : Fragment() {
 
     private fun showLoading(show: Boolean) {
         binding.layoutProgressDeliveries.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

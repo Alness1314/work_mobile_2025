@@ -62,7 +62,7 @@ class AboutFragment : Fragment() {
         aboutViewModel.navigationEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is AboutViewModel.NavigationEvent.ToDashboard -> {
-                    findNavController().navigate(R.id.action_navigation_events_to_navigation_dashboard)
+                    findNavController().navigateUp()
                 }
             }
         }

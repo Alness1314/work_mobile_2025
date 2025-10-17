@@ -9,7 +9,9 @@ import com.susess.cv360.helpers.SessionManager
 import com.susess.cv360.model.deliveries.DeliveryResponse
 import com.susess.cv360.repository.ApiRepository
 import com.susess.cv360.repository.SettingsRepository
+import com.susess.cv360.ui.receptions.ReceptionViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,6 +42,8 @@ class DeliveriesViewModel@Inject constructor(
                     _deliveries.postValue(response)
                     _uiState.postValue(UiState.Success)
                 }else{
+                    delay(500)
+                    _uiState.postValue(UiState.Error("No hay configuración disponible"))
                     // No hay configuración → lanzar navegación
                     _navigationEvent.postValue(NavigationEventDeliveries.ToDashboard)
                 }

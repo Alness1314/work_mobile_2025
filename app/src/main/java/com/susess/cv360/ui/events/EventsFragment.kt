@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class EventsFragment: Fragment() {
-
     private var _binding: FragmentEventsBinding? = null
     private val binding get() = _binding!!
 
@@ -43,6 +42,7 @@ class EventsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.autoCompleteEvents.setAdapter(adapterEvents)
         setupObservers()
+        eventViewModel.checkConfig()
         eventViewModel.loadTypeEvents()
         eventViewModel.getCurrentUser()
         setupListeners()
@@ -66,15 +66,11 @@ class EventsFragment: Fragment() {
                 is EventsViewModel.UiState.SendEventApi -> {
                     showLoading(false)
                     Snackbar.make(binding.root, "Bitacora enviada con exito.", Snackbar.LENGTH_SHORT).show()
-                    clearForm()
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        findNavController().navigate(R.id.action_navigation_events_to_navigation_dashboard)
-                    }, 1500)
-
                 }
             }
 
         }
+
         eventViewModel.formState.observe(viewLifecycleOwner) { formState ->
             when(val result = formState.descriptionResult){
                 is ValidationResult.Invalid -> {
@@ -122,7 +118,6 @@ class EventsFragment: Fragment() {
             }
         }
 
-        // Observamos los eventos de navegación
         eventViewModel.navigationEvent.observe(viewLifecycleOwner) { event ->
             when (event) {
                 is EventsViewModel.NavigationEventAbout.ToDashboard -> {

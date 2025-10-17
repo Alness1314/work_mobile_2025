@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.RoomOpenDelegate
 import com.susess.cv360.helpers.SessionManager
 import com.susess.cv360.helpers.ValidateFieldsHelper.validateField
 import com.susess.cv360.model.events.EventRequest
@@ -13,9 +12,11 @@ import com.susess.cv360.model.events.EventResponse
 import com.susess.cv360.model.events.TypeEventResponse
 import com.susess.cv360.repository.ApiRepository
 import com.susess.cv360.repository.SettingsRepository
+import com.susess.cv360.ui.about.AboutViewModel
 import com.susess.cv360.validations.ValidationResult
 import com.susess.cv360.validations.ValidationRules
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -55,6 +56,18 @@ class EventsViewModel@Inject constructor(
         }
     }
 
+    fun checkConfig(){
+        viewModelScope.launch {
+            _uiState.postValue(UiState.Loading)
+            val cfg = repositoryDb.findSetting()
+            if (cfg == null) {
+                delay(500)
+                _uiState.postValue(UiState.Error("No hay configuración disponible"))
+                _navigationEvent.postValue(NavigationEventAbout.ToDashboard)
+            }
+        }
+    }
+
     fun getCurrentUser(){
         viewModelScope.launch {
             // No necesitas Loading state para esto
@@ -72,16 +85,17 @@ class EventsViewModel@Inject constructor(
                 if (cfg != null) {
                     val response: EventResponse = repositoryApi.createEvent(sessionManager.authHeaders(), cfg.facilityId, request)
                     _uiState.postValue(UiState.SendEventApi(response))
+                    delay(500)
+                    _navigationEvent.postValue(NavigationEventAbout.ToDashboard)
                 }else{
                     // No hay configuración → lanzar navegación
                     _navigationEvent.postValue(NavigationEventAbout.ToDashboard)
                 }
             } catch (e: Exception) {
-                _uiState.postValue(UiState.Error(e.localizedMessage?: "Error enviando bitácora"))
+                _uiState.postValue(UiState.Error(e.localizedMessage ?: "Error enviando bitácora"))
             }
         }
     }
-
 
     sealed class UiState {
         object Idle : UiState()

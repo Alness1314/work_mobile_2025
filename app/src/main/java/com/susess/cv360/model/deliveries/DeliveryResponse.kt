@@ -7,16 +7,16 @@ import com.susess.cv360.model.volume.VolumeResponse
 import java.math.BigDecimal
 
 data class DeliveryResponse(
-    val tanque: TankResponse,
-    val publicKey: String,
-    val numeroDeRegistro: Int,
-    val volumenInicialTanque: InitialVolumeResponse,
-    val volumenFinalTanque: BigDecimal,
-    val volumenEntregado: VolumeResponse,
-    val temperatura: BigDecimal,
-    val presionAbsoluta: BigDecimal,
-    val fechaYHoraInicialEntrega: String,
-    val fechaYHoraFinalEntrega: String,
-    val extra: String,
-    val documents: MutableList<FileResponse>
+    val tanque: TankResponse? = null,
+    val publicKey: String? = null,
+    val numeroDeRegistro: Int? = null,
+    val volumenInicialTanque: InitialVolumeResponse? = null,
+    val volumenFinalTanque: BigDecimal? = null,
+    val volumenEntregado: VolumeResponse? = null,
+    val temperatura: BigDecimal? = null,
+    val presionAbsoluta: BigDecimal? = null,
+    val fechaYHoraInicialEntrega: String? = null,
+    val fechaYHoraFinalEntrega: String? = null,
+    val extra: String? = null,
+    val documents: MutableList<FileResponse>? = null
 )

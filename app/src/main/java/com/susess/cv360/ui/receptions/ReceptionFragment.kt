@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -15,6 +16,7 @@ import com.susess.cv360.adapters.ModuleAdapter
 import com.susess.cv360.adapters.ReceptionAdapter
 import com.susess.cv360.databinding.FragmentReceptionBinding
 import com.susess.cv360.ui.dashboard.DashboardViewModel
+import com.susess.cv360.ui.events.EventsViewModel
 import com.susess.cv360.ui.pickers.DatetimePickers
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,6 +72,14 @@ class ReceptionFragment : Fragment() {
             }
         }
 
+        receptionViewModel.navigationEvent.observe(viewLifecycleOwner) { event ->
+            when (event) {
+                is ReceptionViewModel.NavigationEventReceptions.ToDashboard -> {
+                    findNavController().navigate(R.id.action_navigation_reception_to_navigation_dashboard)
+                }
+            }
+        }
+
     }
 
     fun initValues(){
@@ -98,6 +108,11 @@ class ReceptionFragment : Fragment() {
 
     private fun showLoading(show: Boolean) {
         binding.layoutProgressReceptions.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

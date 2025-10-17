@@ -10,6 +10,7 @@ import com.susess.cv360.model.receptions.ReceptionResponse
 import com.susess.cv360.repository.ApiRepository
 import com.susess.cv360.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,6 +42,8 @@ class ReceptionViewModel@Inject constructor(
                     _uiState.postValue(UiState.Success)
                 }else{
                     // No hay configuración → lanzar navegación
+                    delay(500)
+                    _uiState.postValue(UiState.Error("No hay configuración disponible"))
                     _navigationEvent.postValue(NavigationEventReceptions.ToDashboard)
                 }
             }catch (e: Exception){

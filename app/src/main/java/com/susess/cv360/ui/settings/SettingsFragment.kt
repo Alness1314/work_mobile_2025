@@ -62,10 +62,13 @@ class SettingsFragment : Fragment() {
                 }
                 is SettingsViewModel.UiState.DefaultsCfgLoaded -> {
                     state.settingCfg?.let { cfg ->
-                        binding.textFacilitySet.text = cfg.facilityName
-                        binding.textTankSet.text = cfg.tankName
-                        binding.textProductSet.text = cfg.productName
-                        binding.textUnitMeasurementSet.text = cfg.unitMeasurement
+                        //binding.textFacilitySet.text = cfg.facilityName
+                        //binding.textTankSet.text = cfg.tankName
+                        //binding.textProductSet.text = cfg.productName
+                        //binding.textUnitMeasurementSet.text = cfg.unitMeasurement
+                        Snackbar.make(binding.root,
+                            "Cfg: ${cfg.settingKey} cargada.",
+                            Snackbar.LENGTH_SHORT).show()
                     }
                 }
                 is SettingsViewModel.UiState.SettingCfgSaved -> {
@@ -107,7 +110,7 @@ class SettingsFragment : Fragment() {
             val tank = settingsViewModel.tanks.value?.get(position)
             tank?.let {
                 binding.inputProduct.setText(it.producto.marcaComercial)
-                binding.inputUnitMeasurement.setText(it.producto.unidadMedida)
+                //binding.inputUnitMeasurement.setText(it.producto.unidadMedida)
                 binding.buttonSelectTank.isEnabled = true
             }
         }
@@ -121,10 +124,10 @@ class SettingsFragment : Fragment() {
             if (facility != null && tank != null) {
                 val um = getUnitMeasurement(tank.producto.claveSubProducto)
                 settingsViewModel.saveSettings(facility, tank)
-                binding.textFacilitySet.text = facility.externalKey
-                binding.textTankSet.text = tank.externalKey
-                binding.textProductSet.text = tank.producto.marcaComercial
-                binding.textUnitMeasurementSet.text = um
+                //binding.textFacilitySet.text = facility.externalKey
+                //binding.textTankSet.text = tank.externalKey
+                //binding.textProductSet.text = tank.producto.marcaComercial
+                //binding.textUnitMeasurementSet.text = um
             } else {
                 Snackbar.make(binding.root, "Debes seleccionar instalación y tanque", Snackbar.LENGTH_SHORT).show()
             }
