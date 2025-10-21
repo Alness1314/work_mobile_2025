@@ -37,10 +37,10 @@ class DeliveryAdapter(private val onClick: (DeliveryResponse) -> Unit = {}): Lis
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: DeliveryResponse) {
-            binding.textTitleDelivery.text = item.tanque.externalKey
-            binding.textSubtitleDelivery.text = "${item.volumenEntregado.valorNumerico.setScale(3,
-                RoundingMode.DOWN)} ${item.volumenEntregado.unidadDeMedida.descripcion}"
-            binding.textDateDelivery.text = DateTimeUtils.formatOffsetDateTimeToDateTime2(item.fechaYHoraFinalEntrega)
+            binding.textTitleDelivery.text = item.tanque?.externalKey
+            binding.textSubtitleDelivery.text = "${item.volumenEntregado?.valorNumerico?.setScale(3,
+                RoundingMode.DOWN)} ${item.volumenEntregado?.unidadDeMedida?.descripcion}"
+            binding.textDateDelivery.text = DateTimeUtils.formatOffsetDateTimeToDateTime2(item.fechaYHoraFinalEntrega!!)
             binding.root.setOnClickListener { onClick(item) }
         }
     }

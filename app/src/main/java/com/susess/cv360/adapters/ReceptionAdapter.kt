@@ -38,10 +38,10 @@ class ReceptionAdapter(private val onClick: (ReceptionResponse) -> Unit = {}): L
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: ReceptionResponse) {
-            binding.textTitleReception.text = item.tanque.externalKey
-            binding.textSubtitleReception.text = "${item.volumenRecepcion.valorNumerico.setScale(3,
-                RoundingMode.DOWN)} ${item.volumenRecepcion.unidadDeMedida.descripcion}"
-            binding.textDateReception.text = DateTimeUtils.formatOffsetDateTimeToDateTime2(item.fechaYHoraFinalRecepcion)
+            binding.textTitleReception.text = item.tanque?.externalKey
+            binding.textSubtitleReception.text = "${item.volumenRecepcion?.valorNumerico?.setScale(3,
+                RoundingMode.DOWN)} ${item.volumenRecepcion?.unidadDeMedida?.descripcion}"
+            binding.textDateReception.text = DateTimeUtils.formatOffsetDateTimeToDateTime2(item.fechaYHoraFinalRecepcion!!)
             binding.root.setOnClickListener { onClick(item) }
         }
     }

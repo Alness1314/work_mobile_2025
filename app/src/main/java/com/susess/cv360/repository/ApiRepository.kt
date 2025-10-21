@@ -6,14 +6,21 @@ import com.susess.cv360.common.Endpoints
 import com.susess.cv360.common.KeyFilters
 import com.susess.cv360.model.about.AboutResponse
 import com.susess.cv360.model.deliveries.DeliveryRequest
+import com.susess.cv360.model.deliveries.DeliveryResp
 import com.susess.cv360.model.deliveries.DeliveryResponse
 import com.susess.cv360.model.events.EventRequest
 import com.susess.cv360.model.events.EventResponse
 import com.susess.cv360.model.events.TypeEventResponse
 import com.susess.cv360.model.facility.FacilityResponse
+import com.susess.cv360.model.files.FileResponse
 import com.susess.cv360.model.receptions.ReceptionRequest
+import com.susess.cv360.model.receptions.ReceptionResp
 import com.susess.cv360.model.receptions.ReceptionResponse
 import com.susess.cv360.model.tank.TankResponse
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
 
 class ApiRepository @Inject constructor(
@@ -134,9 +141,9 @@ class ApiRepository @Inject constructor(
         facilityKey: String,
         tankKey: String,
         request: ReceptionRequest
-    ): ReceptionResponse{
+    ): ReceptionResp {
         val url = String.format(Endpoints.TANK_SEND_RECEPTION, facilityKey, tankKey)
-        val response = apiService.post<ReceptionResponse>(url, request, headers, ReceptionResponse::class.java)
+        val response = apiService.post<ReceptionResp>(url, request, headers, ReceptionResp::class.java)
 
         // VERIFICACIÓN EXPLÍCITA DE ERROR
         if (!response.isSuccessful) {
@@ -147,7 +154,7 @@ class ApiRepository @Inject constructor(
             throw Exception("ERROR API: Code=${response.code}, Body=${response.rawBody?:"N/D"}")
         }
 
-        return response.body ?: ReceptionResponse()
+        return response.body ?: ReceptionResp()
     }
 
     suspend fun sendDelivery(
@@ -155,9 +162,9 @@ class ApiRepository @Inject constructor(
         facilityKey: String,
         tankKey: String,
         request: DeliveryRequest
-    ): DeliveryResponse{
+    ): DeliveryResp{
         val url = String.format(Endpoints.TANK_SEND_DELIVERY, facilityKey, tankKey)
-        val response = apiService.post<DeliveryResponse>(url, request, headers, DeliveryResponse::class.java)
+        val response = apiService.post<DeliveryResp>(url, request, headers, DeliveryResp::class.java)
 
         // VERIFICACIÓN EXPLÍCITA DE ERROR
         if (!response.isSuccessful) {
@@ -168,7 +175,43 @@ class ApiRepository @Inject constructor(
             throw Exception("ERROR API: Code=${response.code}, Body=${response.rawBody?:"N/D"}")
         }
 
-        return response.body ?: DeliveryResponse()
+        return response.body ?: DeliveryResp()
+    }
+
+    suspend fun uploadFile(
+        headers: Map<String, String>,
+        path: String
+    ): FileResponse {
+        // 1️⃣ Preparar archivo y multipart
+        val file = File(path)
+        val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+        val filePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+        val nameRequestBody =
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file.name)
+        val namePart = MultipartBody.Part.createFormData("name", null, nameRequestBody)
+
+        // 2️⃣ Construir lista de partes
+        val parts = listOf(namePart, filePart)
+
+        // 3️⃣ Endpoint
+        val url = Endpoints.FILE_SEND // asegúrate de definirlo en tu objeto Endpoints
+
+        // 4️⃣ Llamar al repositorio genérico
+        val response = apiService.postMultipart<FileResponse>(
+            url = url,
+            parts = parts,
+            headers = headers,
+            clazz = FileResponse::class.java
+        )
+
+        // 5️⃣ Manejo de respuesta
+        if (!response.isSuccessful) {
+            Log.e("ApiRepository", "ERROR FILE UPLOAD: Code=${response.code}, Body=${response.rawBody}")
+            throw Exception("Error al subir archivo: ${response.rawBody ?: "Sin detalle"}")
+        }
+
+        return response.body ?: FileResponse()
     }
 
 

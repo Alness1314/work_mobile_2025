@@ -12,7 +12,6 @@ import com.susess.cv360.model.events.EventResponse
 import com.susess.cv360.model.events.TypeEventResponse
 import com.susess.cv360.repository.ApiRepository
 import com.susess.cv360.repository.SettingsRepository
-import com.susess.cv360.ui.about.AboutViewModel
 import com.susess.cv360.validations.ValidationResult
 import com.susess.cv360.validations.ValidationRules
 import dagger.hilt.android.lifecycle.HiltViewModel
